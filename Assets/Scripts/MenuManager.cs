@@ -54,7 +54,11 @@ public class MenuManager : MonoBehaviour {
 			}	
 		}
 		if (obj != null)
-			Instantiate(obj, Camera.main.ScreenToWorldPoint( new Vector3(Screen.width/2, Screen.height/2, 7.2f)), Quaternion.identity);
+		{
+			var instance = Instantiate(obj, Camera.main.ScreenToWorldPoint( new Vector3(Screen.width/2, Screen.height/2, 7.2f)), Quaternion.identity);
+			var temp = new Vector3(1, 1, 1);
+			instance.transform.localScale = temp;
+		}
 	}
 
 	public void ShowBuildMenu()

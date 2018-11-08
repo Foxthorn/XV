@@ -19,8 +19,6 @@ public class GameManager : MonoBehaviour {
 		{
 			placableObjects.Add((GameObject)item);
 		}
-		Debug.Log(objectArray.Length);
-		Debug.Log(placableObjects.Count);
 	}
 	
 	// Update is called once per frame
