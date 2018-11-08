@@ -6,7 +6,6 @@ public class CameraControls : MonoBehaviour {
 
 	public float rotationSpeed = 0.1f;
 
-	float zoomDistance;
 	GameObject selectedObject;
 	// Use this for initialization
 	void Start () {
@@ -20,7 +19,6 @@ public class CameraControls : MonoBehaviour {
 		if (Input.GetKey(KeyCode.Mouse1) && selectedObject != null)
 			RotateCamera();
 		var scroll = Input.GetAxis("Mouse ScrollWheel");
-		zoomDistance += scroll;
 		if (scroll != 0)
 			transform.Translate(Vector3.forward * scroll);
 	}
