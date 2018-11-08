@@ -6,6 +6,7 @@ public class CameraControls : MonoBehaviour {
 
 	public float rotationSpeed = 0.1f;
 
+	float zoomDistance;
 	GameObject selectedObject;
 	// Use this for initialization
 	void Start () {
@@ -17,22 +18,24 @@ public class CameraControls : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 			CheckRayCollision();
 		if (Input.GetKey(KeyCode.Mouse1) && selectedObject != null)
-		{
 			RotateCamera();
-		}
+		var scroll = Input.GetAxis("Mouse ScrollWheel");
+		zoomDistance += scroll;
+		if (scroll != 0)
+			transform.Translate(Vector3.forward * scroll);
 	}
 
 	void CheckRayCollision()
 	{
-   		RaycastHit hit; 
+   		RaycastHit hit;
    		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
-   		if ( Physics.Raycast(ray,out hit,100.0f)) 
+   		if ( Physics.Raycast(ray, out hit, 1000.0f)) 
 		{
 			if (hit.transform.tag == "Object")
 			{
 				selectedObject = hit.transform.gameObject;
 				transform.LookAt(selectedObject.transform.position);
-				while (Vector3.Distance(transform.position, hit.transform.position) > 7.2f)
+				while (Vector3.Distance(transform.position, hit.transform.position) > 10f)
 					transform.position = Vector3.MoveTowards(transform.position, hit.transform.position, 0.1f);
 				ChangeMovement(true);
 			}

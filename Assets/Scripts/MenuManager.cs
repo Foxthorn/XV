@@ -32,10 +32,29 @@ public class MenuManager : MonoBehaviour {
 				{
 					var btn = Instantiate(button, menu.transform);
 					btn.transform.GetChild(0).gameObject.GetComponent<Text>().text = obj.transform.name;
-					btn.transform.GetChild(0).gameObject.GetComponent<Text>().text = obj.transform.name;
+					var temp = btn.transform.GetChild(0).gameObject.GetComponent<RectTransform>().localScale;
+					temp.x = 4;
+					btn.transform.GetChild(0).gameObject.GetComponent<RectTransform>().localScale = temp;
+					Button b = btn.GetComponent<Button>();
+					b.onClick.AddListener(() => CreateObject(obj.transform.name));
 				}
 			}
 		}
+	}
+
+	void CreateObject(string name)
+	{
+		GameObject obj = null;
+		foreach (GameObject item in GameManager.gm.placableObjects)
+		{
+			if (item.transform.name == name)
+			{
+				obj = item;
+				break;
+			}	
+		}
+		if (obj != null)
+			Instantiate(obj, Camera.main.ScreenToWorldPoint( new Vector3(Screen.width/2, Screen.height/2, 7.2f)), Quaternion.identity);
 	}
 
 	public void ShowBuildMenu()
