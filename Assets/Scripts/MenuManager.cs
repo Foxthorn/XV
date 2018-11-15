@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour {
 	string[] officeObjects = {"Photocopier", "Printer", "Paper", "Document", "code"};
 	string[] shelvingObjects = {"Shelves", "Rack", "Cage", "Cantilever"};
 	string[] tables = {"Table", "Desk"};
+	string[] misc = {"Box", "Pallet", "Crate", "Cabinet", "Kardex", "Cart"};
 	bool subMenu = false;
 	// Use this for initialization
 	void Start () {
@@ -25,6 +26,21 @@ public class MenuManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void CloseAllMenus()
+	{
+		foreach (var menu in toggleMenus)
+		{
+			if (menu.transform.tag == "BuildMenu")
+			{
+				foreach(Transform child in menu.transform)
+				{
+					if (child.tag != "ParentButton")
+						child.gameObject.SetActive(false);
+				}
+			}
+		}
 	}
 
 	void SetupBuildMenu()
@@ -47,6 +63,35 @@ public class MenuManager : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void MiscButton()
+	{
+		foreach(var menu in toggleMenus)
+		{
+			if (menu.transform.tag == "BuildMenu")
+			{
+				var menuButton = menu.transform.Find("Misc");
+				Debug.Log(menuButton);
+				foreach(Transform btn in menu.transform)
+				{
+					foreach(string name in misc)
+					{
+						if (btn.name.Contains(name) && !btn.name.Contains("Rack"))
+						{
+							if (subMenu && btn.gameObject.active)
+								btn.gameObject.SetActive(false);
+							else
+							{
+								btn.SetSiblingIndex(menuButton.GetSiblingIndex() + 1);
+								btn.gameObject.SetActive(true);		
+							}				
+						}
+					}
+				}
+			}
+		}
+		subMenu = true;
 	}
 
 	public void TableButon()
